@@ -33,10 +33,29 @@ public class MainActivity extends ActionBarActivity {
         service = restAdapter.create(TestService.class);
 
         TextView tv = (TextView) findViewById(R.id.tv_test);
+        TextView tv2 = (TextView) findViewById(R.id.tv_test2);
         final TestRequest request = new TestRequest();
         request.setParam("p1", "hello")
                 .setParam("p2", "world");
         tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                service.updateWelcome2(request, new Callback<TestResponse>() {
+                    @Override
+                    public void success(TestResponse testResponse, Response response) {
+                        HashMap<String, String> map = testResponse.getParams();
+                        Log.d("app_logs", map.toString());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+            }
+        });
+
+        tv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 service.updateWelcome(request, new Callback<TestResponse>() {
